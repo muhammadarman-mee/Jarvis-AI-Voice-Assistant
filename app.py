@@ -15,7 +15,7 @@ CORS(app)
 app.secret_key = "your-secret-key"
 
 client = OpenAI(
-    api_key="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",  # ⚠️ Replace before deployment
+    api_key="enter your api",  # ⚠️ Replace before deployment
     base_url="https://openrouter.ai/api/v1"
 )
 
@@ -221,3 +221,4 @@ def analyze_logs():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
