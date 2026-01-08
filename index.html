@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS AI Assistant</title>
+    <meta name="description" content="Just A Rather Very Intelligent System - Advanced AI Assistant Interface">
+
+    <style>
+        /* JARVIS AI Assistant Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400;500&display=swap');
+
+        :root {
+            /* JARVIS Color Palette */
+            --jarvis-bg: #0a0a0f;
+            --jarvis-surface: #151520;
+            --jarvis-panel: #1a1a2e;
+            --jarvis-primary: #00d4ff;
+            --jarvis-primary-dim: #0099cc;
+            --jarvis-accent: #ff6b35;
+            --jarvis-text: #e0e6ff;
+            --jarvis-text-dim: #8892b0;
+            --jarvis-border: #2a2a4a;
+            --jarvis-glow: #00d4ff;
+
+            /* Gradients */
+            --gradient-panel: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(21, 21, 32, 0.9));
+            --gradient-glow: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent 70%);
+
+            /* Shadows */
+            --shadow-jarvis: 0 0 30px rgba(0, 212, 255, 0.3);
+            --shadow-panel: 0 8px 32px rgba(10, 10, 15, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: var(--jarvis-bg);
+            color: var(--jarvis-text);
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, var(--jarvis-bg) 0%, #0f0f1a 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--jarvis-primary), #7db8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--jarvis-text-dim);
+            margin-bottom: 20px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gradient-panel);
+            border: 1px solid var(--jarvis-border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff88; /* Default to ready color */
+            box-shadow: 0 0 15px #00ff88;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--gradient-panel);
+            border: 1px solid var(--jarvis-border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-panel);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--jarvis-primary), transparent);
+            animation: scan 3s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--jarvis-primary);
+            font-weight: 500;
+        }
+
+        .panel-header .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Voice Interface */
+        .voice-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--gradient-panel);
+            border: 1px solid var(--jarvis-border);
+            color: var(--jarvis-text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            border-color: var(--jarvis-primary);
+            box-shadow: var(--shadow-jarvis);
+            transform: translateY(-2px);
+        }
+
+        .btn.active {
+            background: var(--jarvis-primary);
+            color: var(--jarvis-bg);
+            box-shadow: var(--shadow-jarvis);
+        }
+
+        .btn.active::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin-bottom: 25px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 2px;
+            background: var(--jarvis-surface);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: var(--jarvis-text-dim);
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: var(--jarvis-primary);
+            color: var(--jarvis-bg);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            height: 500px; /* Adjust as needed, will be overridden by flex in JS */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(21, 21, 32, 0.5);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--jarvis-border);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .message.jarvis .message-avatar {
+            background: var(--jarvis-primary);
+            color: var(--jarvis-bg);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .message.user .message-avatar {
+            background: var(--jarvis-accent);
+            color: white;
+        }
+
+        .message-content {
+            background: var(--gradient-panel);
+            padding: 12px 16px;
+            border-radius: 15px;
+            border: 1px solid var(--jarvis-border);
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background: var(--jarvis-primary);
+            color: var(--jarvis-bg);
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--jarvis-surface);
+            border: 1px solid var(--jarvis-border);
+            color: var(--jarvis-text);
+            padding: 12px 16px;
+            border-radius: 25px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--jarvis-primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: var(--jarvis-text-dim);
+        }
+
+        /* System Monitor */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--gradient-panel);
+            border: 1px solid var(--jarvis-border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--jarvis-primary);
+            opacity: 0.7;
+        }
+
+        .stat-title {
+            color: var(--jarvis-text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--jarvis-primary);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--jarvis-surface);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--jarvis-primary), var(--jarvis-primary-dim));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .stat-status {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Loading Animation (Not used directly by `glowing` class, but good to keep) */
+        .loading {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--jarvis-primary);
+            animation: loading 1.4s infinite both;
+        }
+
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes loading {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Glowing animation for app when speaking (from your previous code) */
+        .app.glowing {
+            box-shadow: 0 0 25px var(--jarvis-primary), inset 0 0 18px rgba(0, 212, 255, 0.8);
+            animation: glowPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 8px var(--jarvis-primary), inset 0 0 10px rgba(0, 212, 255, 0.4); }
+            50% { box-shadow: 0 0 25px var(--jarvis-primary), inset 0 0 18px rgba(0, 212, 255, 0.8); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .voice-controls {
+                flex-direction: column;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--jarvis-surface);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--jarvis-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--jarvis-primary-dim);
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>J.A.R.V.I.S</h1>
+            <p>Just A Rather Very Intelligent System</p>
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Ready</span>
+            </div>
+        </div>
+
+        <!-- Voice Interface Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-1.1.9-2 2-2zm6 6c0 3.31-2.69 6-6 6s-6-2.69-6-6h2c0 2.21 1.79 4 4 4s4-1.79 4-4h2z"/></svg>
+                Voice Command Interface
+            </div>
+            <div class="voice-controls">
+                <button class="btn" id="voiceBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-1.1.9-2 2-2z"/>
+                        <path d="M6 10c0 3.31 2.69 6 6 6s6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8h2z"/>
+                    </svg>
+                    <span id="voiceBtnText">Start Voice Command</span>
+                </button>
+                <button class="btn" id="testTTSBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                    Test Voice
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Interface Tabs -->
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab-name="chat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v5l5-5h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    Chat Interface
+                </button>
+                <button class="tab-btn" data-tab-name="memoryChat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 14.5v-5h2v5h-2zm0-7V7h2v2.5h-2z"/>
+                    </svg>
+                    Memory Chat
+                </button>
+                <button class="tab-btn" data-tab-name="monitor">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 16V4H3v12h18zm0-14c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2h-7l2 2v1H8v-1l2-2H3c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h18z"/>
+                    </svg>
+                    System Monitor
+                </button>
+            </div>
+
+            <!-- Chat Tab -->
+            <div class="tab-content active" id="chatTab">
+                <div class="panel">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message jarvis">
+                                <div class="message-avatar">J</div>
+                                <div class="message-content">
+                                    <p>Good evening. JARVIS at your service. How may I assist you today?</p>
+                                    <div class="message-time" id="initialTime"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Type your command or question..." onkeypress="handleChatKeyPress(event)">
+                            <button class="btn" id="sendButton">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Chat Tab -->
+            <div class="tab-content" id="memoryChatTab">
+                <div class="panel">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="memoryChatMessages">
+                            <div class="message jarvis">
+                                <div class="message-avatar">J</div>
+                                <div class="message-content">
+                                    <p>Hello, I am JARVIS with memory enabled. I will remember this conversation.</p>
+                                    <div class="message-time"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" id="memoryChatInput" placeholder="Type your memory-enabled message...">
+                            <button class="btn" id="memorySendButton">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitor Tab -->
+            <div class="tab-content" id="monitorTab">
+                <div class="panel">
+                    <div class="panel-header">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M21 16V4H3v12h18zm0-14c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2h-7l2 2v1H8v-1l2-2H3c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h18z"/></svg>
+                        System Performance Monitor
+                    </div>
+                    <div class="stats-grid" id="statsGrid">
+                        <div class="stat-card">
+                            <div class="stat-title">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                CPU Usage
+                            </div>
+                            <div class="stat-value" id="cpuValue">--</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="cpuBar" style="width: 0%"></div>
+                            </div>
+                            <div class="stat-status" id="cpuStatus">Initializing...</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-title">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 3v18h2V3H8zm3 0v18h2V3h-2zm3 0v18h2V3h-2zm3 0v18h2V3h-2z"/>
+                                </svg>
+                                Memory
+                            </div>
+                            <div class="stat-value" id="memoryValue">--</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="memoryBar" style="width: 0%"></div>
+                            </div>
+                            <div class="stat-status" id="memoryStatus">Initializing...</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-title">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M6 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/>
+                                </svg>
+                                Storage
+                            </div>
+                            <div class="stat-value" id="diskValue">--</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="diskBar" style="width: 0%"></div>
+                            </div>
+                            <div class="stat-status" id="diskStatus">Initializing...</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-title">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                                </svg>
+                                Network
+                            </div>
+                            <div class="stat-value" id="networkValue">--</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" id="networkBar" style="width: 0%"></div>
+                            </div>
+                            <div class="stat-status" id="networkStatus">Initializing...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // Global variables
+    let isListening = false;
+    let recognition = null;
+    let currentTab = 'chat';
+    const API_BASE = 'http://127.0.0.1:5000'; // Flask backend default URL
+
+    // Get elements from the DOM
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const voiceBtnText = document.getElementById('voiceBtnText');
+    const testTTSBtn = document.getElementById('testTTSBtn');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendButton = document.getElementById('sendButton');
+    const initialTime = document.getElementById('initialTime');
+    const appContainer = document.querySelector('.container');
+
+    // Memory Chat DOM elements
+    const memoryChatMessages = document.getElementById('memoryChatMessages');
+    const memoryChatInput = document.getElementById('memoryChatInput');
+    const memorySendButton = document.getElementById('memorySendButton');
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    // Initialize JARVIS
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeJARVIS();
+    });
+
+    function initializeJARVIS() {
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                isListening = true;
+                setStatus('listening', 'Listening...');
+                voiceBtn.classList.add('active');
+                voiceBtnText.textContent = 'Stop Listening';
+            };
+
+            recognition.onresult = function(event) {
+                const last = event.results.length - 1;
+                const command = event.results[last][0].transcript;
+
+                if (event.results[last].isFinal) {
+                    chatInput.value = command;
+                    sendMessage();
+                }
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                setStatus('error', 'Error in voice recognition');
+                stopVoiceRecognition();
+            };
+
+            recognition.onend = function() {
+                stopVoiceRecognition();
+            };
+
+            voiceBtn.addEventListener('click', toggleVoiceRecognition);
+        } else {
+            voiceBtn.disabled = true;
+            voiceBtnText.textContent = 'Not Supported';
+            setStatus('error', 'Voice Not Supported');
+        }
+
+        fetch(`${API_BASE}/system-info`)
+            .then(response => {
+                if (response.ok) {
+                    setStatus('ready', 'System Ready');
+                } else {
+                    setStatus('error', 'Backend Error');
+                }
+            })
+            .catch(error => {
+                setStatus('error', 'Backend Disconnected');
+                console.error('Backend connection failed:', error);
+            });
+
+        updateInitialTime();
+        startSystemMonitoring();
+        addEventListeners();
+    }
+
+    function addEventListeners() {
+        testTTSBtn.addEventListener('click', testTTS);
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.getAttribute('data-tab-name'));
+            });
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', handleChatKeyPress);
+
+        if (memorySendButton) {
+            memorySendButton.addEventListener('click', sendMemoryMessage);
+        }
+        if (memoryChatInput) {
+            memoryChatInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    sendMemoryMessage();
+                }
+            });
+        }
+    }
+
+    function updateInitialTime() {
+        if (initialTime) {
+            initialTime.textContent = new Date().toLocaleTimeString();
+        }
+    }
+
+    // Voice Recognition
+    function toggleVoiceRecognition() {
+        if (!recognition) {
+            alert("Voice recognition not supported in this browser. Please use Chrome or Edge.");
+            return;
+        }
+        isListening ? stopVoiceRecognition() : startVoiceRecognition();
+    }
+
+    function startVoiceRecognition() {
+        isListening = true;
+        recognition.start();
+        setStatus('listening', 'Listening...');
+        voiceBtn.classList.add('active');
+        voiceBtnText.textContent = 'Stop Listening';
+        if(appContainer) appContainer.classList.add('glowing');
+    }
+
+    function stopVoiceRecognition() {
+        isListening = false;
+        if (recognition) recognition.stop();
+        setStatus('ready', 'Ready');
+        voiceBtn.classList.remove('active');
+        voiceBtnText.textContent = 'Start Voice Command';
+        if(appContainer) appContainer.classList.remove('glowing');
+    }
+
+    function testTTS() {
+        speakText('JARVIS systems are fully operational and ready for your commands.');
+    }
+
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.volume = 0.8;
+            utterance.onstart = () => { if(appContainer) appContainer.classList.add('glowing'); };
+            utterance.onend = () => { if(appContainer) appContainer.classList.remove('glowing'); };
+            utterance.onerror = () => { if(appContainer) appContainer.classList.remove('glowing'); };
+            speechSynthesis.speak(utterance);
+        }
+    }
+
+    // Chat
+    function handleChatKeyPress(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    }
+
+    async function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+        addMessageToChat('user', message);
+        chatInput.value = '';
+        setStatus('processing', 'Processing...');
+        try {
+            const response = await fetch(`${API_BASE}/process`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command: message })
+            });
+            const data = await response.json();
+            if (data.response) {
+                addMessageToChat('jarvis', data.response);
+                speakText(data.response);
+            } else {
+                addMessageToChat('jarvis', 'Error processing request.');
+            }
+        } catch {
+            addMessageToChat('jarvis', 'Backend connection error.');
+        }
+        setStatus('ready', 'Ready');
+    }
+
+    function addMessageToChat(sender, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
+        const time = new Date().toLocaleTimeString();
+        messageDiv.innerHTML = `
+            <div class="message-avatar">${sender === 'jarvis' ? 'J' : 'U'}</div>
+            <div class="message-content">
+                <p>${content}</p>
+                <div class="message-time">${time}</div>
+            </div>
+        `;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // ---------------------------
+    // Memory Chat
+    // ---------------------------
+    async function sendMemoryMessage() {
+        const message = memoryChatInput.value.trim();
+        if (!message) return;
+        addMessageToChatUI(memoryChatMessages, 'user', message);
+        memoryChatInput.value = '';
+        setStatus('processing', 'Processing...');
+        try {
+            const response = await fetch(`${API_BASE}/process`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command: message })
+            });
+            const data = await response.json();
+            addMessageToChatUI(memoryChatMessages, 'jarvis', data.response);
+            speakText(data.response);
+        } catch {
+            addMessageToChatUI(memoryChatMessages, 'jarvis', 'Backend connection error.');
+        }
+        setStatus('ready', 'Ready');
+    }
+
+    function addMessageToChatUI(container, sender, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
+        const time = new Date().toLocaleTimeString();
+        messageDiv.innerHTML = `
+            <div class="message-avatar">${sender === 'jarvis' ? 'J' : 'U'}</div>
+            <div class="message-content">
+                <p>${content}</p>
+                <div class="message-time">${time}</div>
+            </div>
+        `;
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // Tabs
+    function switchTab(tabName) {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.querySelector(`.tab-btn[data-tab-name="${tabName}"]`).classList.add('active');
+        document.getElementById(tabName + 'Tab').classList.add('active');
+        currentTab = tabName;
+        if (tabName === 'monitor') startSystemMonitoring();
+    }
+
+    // System Monitoring
+    let systemMonitoringInterval;
+    async function startSystemMonitoring() {
+        if (systemMonitoringInterval) clearInterval(systemMonitoringInterval);
+        updateSystemStats();
+        systemMonitoringInterval = setInterval(updateSystemStats, 3000);
+    }
+
+    async function updateSystemStats() {
+        try {
+            const response = await fetch(`${API_BASE}/system-info`);
+            const stats = await response.json();
+            updateStatCard('cpu', stats.cpu_percent, getStatusText(stats.cpu_percent, 70, 90));
+            updateStatCard('memory', (stats.memory.used / stats.memory.total) * 100, getStatusText((stats.memory.used / stats.memory.total) * 100, 70, 90));
+            updateStatCard('disk', (stats.disk.used / stats.disk.total) * 100, getStatusText((stats.disk.used / stats.disk.total) * 100, 80, 95));
+            updateStatCard('network', 0, 'N/A');
+        } catch {
+            ['cpu', 'memory', 'disk', 'network'].forEach(stat => {
+                updateStatCard(stat, 0, 'Offline');
+            });
+        }
+    }
+
+    function updateStatCard(statName, value, status) {
+        const statValueElem = document.getElementById(`${statName}Value`);
+        const statBarElem = document.getElementById(`${statName}Bar`);
+        const statStatusElem = document.getElementById(`${statName}Status`);
+        if (statValueElem) statValueElem.textContent = `${Math.round(value)}%`;
+        if (statBarElem) statBarElem.style.width = `${value}%`;
+        if (statStatusElem) statStatusElem.textContent = status;
+        if (statBarElem) {
+            if (value >= 90) statBarElem.style.background = 'linear-gradient(90deg, #ff4444, #cc0000)';
+            else if (value >= 70) statBarElem.style.background = 'linear-gradient(90deg, #ffaa00, #ff8800)';
+            else statBarElem.style.background = 'linear-gradient(90deg, var(--jarvis-primary), var(--jarvis-primary-dim))';
+        }
+    }
+
+    function getStatusText(value, warningThreshold, dangerThreshold) {
+        if (value >= dangerThreshold) return 'Critical';
+        if (value >= warningThreshold) return 'High';
+        return 'Normal';
+    }
+
+    // Status
+    function setStatus(status, text) {
+        if (statusDot) {
+            statusText.textContent = text;
+            switch (status) {
+                case 'listening':
+                    statusDot.style.background = '#00d4ff';
+                    statusDot.style.boxShadow = '0 0 15px #00d4ff';
+                    break;
+                case 'processing':
+                    statusDot.style.background = '#ffaa00';
+                    statusDot.style.boxShadow = '0 0 15px #ffaa00';
+                    break;
+                case 'error':
+                    statusDot.style.background = '#ff4444';
+                    statusDot.style.boxShadow = '0 0 15px #ff4444';
+                    break;
+                default:
+                    statusDot.style.background = '#00ff88';
+                    statusDot.style.boxShadow = '0 0 15px #00ff88';
+                    break;
+            }
+        }
+    }
+
+    // Error Handling
+    window.addEventListener('error', function(event) {
+        console.error('JavaScript error:', event.error);
+        setStatus('error', 'System Error');
+    });
+
+    // Cleanup
+    window.addEventListener('beforeunload', function() {
+        if (isListening && recognition) recognition.stop();
+        if (systemMonitoringInterval) clearInterval(systemMonitoringInterval);
+    });
+</script>
+</body>
+</html>
