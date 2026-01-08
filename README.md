@@ -5,53 +5,86 @@ J.A.R.V.I.S is a web-based intelligent assistant designed to provide a centraliz
 
 🚀 Key Features
 
-Voice Control: Hands-free interaction utilizing the Web Speech API.
+Voice & Text Control: Users can provide commands via a microphone using the Web Speech API or by typing into a text field.
 +2
 
 
-Task Automation: Instantly launches local applications (Notepad, Calculator) and navigates to popular websites (Google, YouTube).
+Task Automation: Instantly launches local applications (e.g., Notepad, Calculator) and navigates to websites (e.g., Google, YouTube) based on keywords.
 +1
 
 
-Conversational AI: Integrated with OpenAI’s GPT-3.5 Turbo for natural language queries.
-+2
+Conversational AI: Integrated with OpenAI’s GPT-3.5 Turbo to handle natural language queries that do not match predefined commands.
++3
 
 
-System Monitoring: Real-time dashboard displaying CPU, RAM, Disk usage, and boot time using the psutil library.
-+1
+Real-time System Monitoring: A live dashboard displays CPU, RAM, and Disk usage metrics retrieved using the psutil library.
++3
 
 
 Futuristic UI: A responsive "cyberpunk-inspired" interface featuring the Orbiton font and a dark, glowing aesthetic.
 +1
 
+
+Command Logging: Automatically records all user inputs and system responses to a logs.txt file for analysis.
++1
+
 🛠️ Technology Stack
 
-Languages: Python, JavaScript, HTML, CSS.
+Backend Framework: Python with Flask.
 +1
 
 
-Backend Framework: Flask.
+Frontend Technologies: HTML5, CSS3, JavaScript.
 +1
 
 
 AI Integration: OpenAI API (via OpenRouter).
++2
+
+
+System Libraries: psutil for metrics, subprocess for launching apps, and webbrowser for web tasks.
 +1
 
 
-System Integration: subprocess (app control) and psutil (system metrics).
+APIs: Web Speech API for browser-based voice recognition.
++1
+
+📂 System Architecture
+The project follows a modular client-server setup:
+
+
+Client Layer: The "face" of the assistant where users interact via the web interface.
++1
+
+
+Application Layer: A Flask server that acts as a bridge between user input and system modules.
+
+
+Processing Layer: Decides whether to execute a local command or send the query to the conversational AI.
 +1
 
 🔧 Installation & Setup
-Clone the repository: git clone https://github.com/your-username/Jarvis-AI-Voice-Assistant.git
+Clone the Repository:
 
-Install dependencies: pip install -r requirements.txt
+Bash
 
-Configure API Key: Add your OpenAI/OpenRouter API key to the backend configuration.
+git clone https://github.com/your-username/Jarvis-AI-Voice-Assistant.git
+cd Jarvis-AI-Voice-Assistant
+Install Dependencies:
 
-Run the application: python app.py
+Bash
+
+pip install -r requirements.txt
+Run the Application:
+
+Bash
+
+python app.py
+
+Access the Assistant: Open your browser and go to http://127.0.0.1:5000/.
 
 🎓 Author
-Muhammad Arman Software Engineer
+Muhammad Arman Software Engineer Bachelor of Science in Software Engineering
 
 
-BS in Software Engineering, University of Sahiwal
+University of Sahiwal
