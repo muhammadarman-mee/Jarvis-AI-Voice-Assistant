@@ -1,90 +1,116 @@
-J.A.R.V.I.S: AI-Powered Task Automation Through Voice
+# 🤖 J.A.R.V.I.S: AI-Powered Task Automation Through Voice
 
-J.A.R.V.I.S is a web-based intelligent assistant designed to provide a centralized hub for interacting with a computer through voice and text commands. It simplifies complex workflows by automating system tasks and integrating conversational AI.
-+3
+**J.A.R.V.I.S (Just A Rather Very Intelligent System)** is a web-based intelligent assistant that enables users to interact with their computer using **voice and text commands**. It acts as a centralized automation hub, simplifying everyday workflows by executing system tasks, monitoring resources, and responding intelligently through conversational AI.
 
-🚀 Key Features
+---
 
-Voice & Text Control: Users can provide commands via a microphone using the Web Speech API or by typing into a text field.
-+2
+## 🖼️ Application Screenshots
 
+<img src="https://github.com/user-attachments/assets/5f88eda8-35f2-452c-9f46-0d9f1c1ca575" width="900" />
+<img src="https://github.com/user-attachments/assets/71a54904-f4de-4985-bc25-368c18560dc0" width="900" />
+<img src="https://github.com/user-attachments/assets/be73f051-7362-48cc-acff-7822a15317ad" width="900" />
+<img src="https://github.com/user-attachments/assets/3a929ca7-3a8a-4004-90ac-2e4563063929" width="900" />
 
-Task Automation: Instantly launches local applications (e.g., Notepad, Calculator) and navigates to websites (e.g., Google, YouTube) based on keywords.
-+1
+---
 
+## 🚀 Key Features
 
-Conversational AI: Integrated with OpenAI’s GPT-3.5 Turbo to handle natural language queries that do not match predefined commands.
-+3
+* **Voice & Text Control**
+  Accepts commands via microphone using the **Web Speech API** or through manual text input.
 
+* **Task Automation**
+  Launches local applications (e.g., Notepad, Calculator) and opens websites (e.g., Google, YouTube) using keyword-based commands.
 
-Real-time System Monitoring: A live dashboard displays CPU, RAM, and Disk usage metrics retrieved using the psutil library.
-+3
+* **Conversational AI**
+  Integrated with **OpenAI GPT-3.5 Turbo** to handle natural language queries beyond predefined commands.
 
+* **Real-Time System Monitoring**
+  Displays live **CPU, RAM, and Disk usage** using the `psutil` library.
 
-Futuristic UI: A responsive "cyberpunk-inspired" interface featuring the Orbiton font and a dark, glowing aesthetic.
-+1
+* **Futuristic UI**
+  Cyberpunk-inspired, responsive interface featuring the **Orbitron font**, dark theme, and glowing visual elements.
 
+* **Command Logging**
+  Automatically records user commands and system responses in a `logs.txt` file for debugging and analysis.
 
-Command Logging: Automatically records all user inputs and system responses to a logs.txt file for analysis.
-+1
+---
 
-🛠️ Technology Stack
+## 🛠️ Technology Stack
 
-Backend Framework: Python with Flask.
-+1
+### 🔹 Backend
 
+* **Python**
+* **Flask** – Application logic and API routing
 
-Frontend Technologies: HTML5, CSS3, JavaScript.
-+1
+### 🔹 Frontend
 
+* **HTML5, CSS3, JavaScript**
+* Web-based dashboard with real-time updates
 
-AI Integration: OpenAI API (via OpenRouter).
-+2
+### 🔹 AI Integration
 
+* **OpenAI API (GPT-3.5 Turbo)** via **OpenRouter**
 
-System Libraries: psutil for metrics, subprocess for launching apps, and webbrowser for web tasks.
-+1
+### 🔹 System & Utility Libraries
 
+* `psutil` – System resource monitoring
+* `subprocess` – Local application execution
+* `webbrowser` – Website automation
 
-APIs: Web Speech API for browser-based voice recognition.
-+1
+### 🔹 Voice API
 
-📂 System Architecture
-The project follows a modular client-server setup:
+* **Web Speech API** for browser-based speech recognition
 
+---
 
-Client Layer: The "face" of the assistant where users interact via the web interface.
-+1
+## 📂 System Architecture
 
+The project follows a **modular client-server architecture**:
 
-Application Layer: A Flask server that acts as a bridge between user input and system modules.
+1. **Client Layer**
+   Web interface where users interact using voice or text commands.
 
+2. **Application Layer**
+   Flask server that processes requests and routes them to appropriate modules.
 
-Processing Layer: Decides whether to execute a local command or send the query to the conversational AI.
-+1
+3. **Processing Layer**
+   Determines whether to execute a system command or forward the query to the conversational AI engine.
 
-🔧 Installation & Setup
-Clone the Repository:
+---
 
-Bash
+## 🔧 Installation & Setup
 
+### 1️⃣ Clone the repository
+
+```bash
 git clone https://github.com/your-username/Jarvis-AI-Voice-Assistant.git
 cd Jarvis-AI-Voice-Assistant
-Install Dependencies:
+```
 
-Bash
+### 2️⃣ Install dependencies
 
+```bash
 pip install -r requirements.txt
-Run the Application:
+```
 
-Bash
+### 3️⃣ Run the application
 
+```bash
 python app.py
+```
 
-Access the Assistant: Open your browser and go to http://127.0.0.1:5000/.
+### 4️⃣ Access the assistant
 
-🎓 Author
-Muhammad Arman Software Engineer Bachelor of Science in Software Engineering
+Open your browser and navigate to:
+👉 **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 
+---
 
-University of Sahiwal
+## 🎓 Author
+
+**Muhammad Arman**
+Software Engineer
+Bachelor of Science in Software Engineering
+*University of Sahiwal*
+
+---
